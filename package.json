@@ -1,0 +1,25 @@
+{
+  "name": "theme-simple-modified",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aleksej579/theme-simple-modified.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aleksej579/theme-simple-modified/issues"
+  },
+  "homepage": "https://github.com/Aleksej579/theme-simple-modified#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.0.0",
+    "sass": "^1.38.2"
+  },
+  "dependencies": {}
+}
