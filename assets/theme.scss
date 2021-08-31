@@ -110,7 +110,8 @@ $width-site: 1280px;
 $gutter: 30px;
 $mobile-icon-line-thickness: 5px;
 
-/*====== Typography ======*/@font-face {
+/*====== Typography ======*/
+@font-face {
   font-family: Helvetica;
   font-weight: 400;
   font-style: normal;
@@ -144,8 +145,8 @@ $mobile-icon-line-thickness: 5px;
 }
 
 
-
-$font-stack-header: "Times New Roman", Times, serif;
+// $font-stack-header: "Times New Roman", Times, serif;
+$font-stack-header: 'FrancoisOne-Regular', sans-serif;
 $font-weight-header: 400;
 $font-weight-header--bold: 700;
 $font-style-header: normal;
@@ -159,7 +160,8 @@ $nav-link-height: $font-size-nav * 3;
 
 $font-weight-body: 400;
 $font-weight-body--bold: 700;
-$font-stack-body: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+// $font-stack-body: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+$font-stack-body: Acme, sans-serif;
 $font-stack-style: normal;
 $font-size-base: 15px; // Henceforth known as 1em
 
