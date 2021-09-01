@@ -1,4 +1,9 @@
 <div class="index-sections">
+
+  {% if template == 'index' %}
+    {% render 'pop-up' %}
+  {% endif %}
+
   {{ content_for_index }}
 
   <div style="border: 1px solid #800000;">
