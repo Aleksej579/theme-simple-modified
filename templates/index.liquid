@@ -1,3 +1,15 @@
 <div class="index-sections">
+
+  {% if template == 'index' %}
+    {% render 'pop-up' %}
+  {% endif %}
+
   {{ content_for_index }}
+
+  {% section 'carousel_' %}
+
+  <div style="border: 1px solid #800000;">
+    <p style="text-decoration: underline;"><i>New block. This block is duplicate 'featured-content'</i></p>
+    {% section 'featured-content' %}
+  </div>
 </div>
