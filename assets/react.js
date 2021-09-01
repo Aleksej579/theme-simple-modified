@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $(".owl-carousel").owlCarousel();
+
     $('#ex1').modal({
         fadeDuration: 250,
         fadeDelay: 0.80
@@ -20,6 +22,8 @@ $(document).ready(function () {
             $('.Single').text(Math.ceil(this.Counter));
         }
     });
+
+
 
 
 });
