@@ -94,6 +94,25 @@
           (<span id="CartCount">{{ cart.item_count }}</span>)
         </span>
       </a>
+
+      {%- if customer.has_account -%}
+        <div class='orders_in_progress' style='visibility: hidden; display: flex; align-items: center; flex-direction: column; justify-content: center;'>
+          {% assign order_unfulfilled = customer.orders | where: "fulfillment_status_label", "Unfulfilled" %}
+          <ul style='padding: 0; margin: 0;'>
+              {% for order in order_unfulfilled %}
+                  <li style='height: 0;'>{{ order.fulfillment_status_label }}</li>
+              {% endfor %}
+          </ul>
+          <span style='visibility: visible; padding-left: 30px;'></span>
+        </div>
+        <script>
+            let countOrder = document.querySelector('.orders_in_progress ul')
+            let countOrderNumber = countOrder.childElementCount;
+            let wrapp_countOrder = document.querySelector('.orders_in_progress span')
+            wrapp_countOrder.innerHTML = `Orders in progress: ${countOrderNumber}`
+        </script>
+      {%- endif -%}
+
     </div>
   </div>
 
