@@ -21,6 +21,7 @@
       <th scope="col">{{ 'customer.order.sku' | t }}</th>
       <th class="text-right" scope="col">{{ 'customer.order.price' | t }}</th>
       <th class="text-right" scope="col">{{ 'customer.order.quantity' | t }}</th>
+      <th id="ColumnBrowser" scope="col" role="columnheader">Additional Information</th>
       <th class="text-right" scope="col">{{ 'customer.order.total' | t }}</th>
     </tr>
   </thead>
@@ -96,6 +97,26 @@
           {% include 'product-unit-price', variant: line_item, available: true %}
         </td>
         <td class="text-right" data-label="{{ 'customer.order.quantity' | t }}">{{ line_item.quantity }}</td>
+        <td>
+          <ul>
+            <li>
+              Browser: <i>{{ order.attributes.metafielaBrowser }}</i>
+            </li>
+            <li>
+              Status: <i>{{ order.fulfillment_status_label }}</i>
+            </li>
+            <li>
+               имя адресата <i>{{ order.shipping_address.name }}</i> <br>
+               телефон адресата <i>{{ order.shipping_address.phone }}</i> <br>
+               адрес доставки <i>{{ order.shipping_address.delivery_address }}</i> <br>
+               страна <i>{{ order.shipping_address.country_name }}</i> <br>
+               регион <i>{{ order.shipping_address.state }}</i> <br>
+               город <i>{{ order.shipping_address.city }}</i> <br>
+               адрес <i>{{ order.shipping_address.address }}</i> <br>
+               индекс <i>{{ order.shipping_address.zip }}</i>
+            </li>
+          </ul>
+        </td>
         <td class="text-right" data-label="{{ 'customer.order.total' | t }}">
           {%- if line_item.original_line_price != line_item.final_line_price -%}
             <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
