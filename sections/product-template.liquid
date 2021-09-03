@@ -1,59 +1,64 @@
 <!-- /templates/product.liquid -->
 
 {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
-  <div class="product-single__policies rte">
-    {%- if cart.taxes_included -%}
-      {{ 'products.product.include_taxes' | t }}
-    {%- endif -%}
-    {%- if shop.shipping_policy.body != blank -%}
-      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-    {%- endif -%}
-  </div>
+<div class="product-single__policies rte">
+  {%- if cart.taxes_included -%}
+  {{ 'products.product.include_taxes' | t }}
+  {%- endif -%}
+  {%- if shop.shipping_policy.body != blank -%}
+  {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+  {%- endif -%}
+</div>
 {%- endif -%}
 {%- assign productClasses = 'product-form' -%}
 {%- if product.has_only_default_variant -%}
-  {%- assign productClasses = productClasses | append: ' product-form--default-variant-only' -%}
+{%- assign productClasses = productClasses | append: ' product-form--default-variant-only' -%}
 {%- endif -%}
 
 
 {% form 'product', product, class: productClasses %}
-  {{ form | payment_terms }}
-  <select name="id" id="ProductSelect-{{ section.id }}" class="product-single__variants">
+{{ form | payment_terms }}
+<select name="id" id="ProductSelect-{{ section.id }}" class="product-single__variants">
 
-    {% for variant in product.variants %}
-      {% if variant.available %}
-        <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
-      {% else %}
-        <option disabled="disabled">
-          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
-        </option>
-      {% endif %}
-    {% endfor %}
-  </select>
-
-
-
-  {% if section.settings.product_quantity_enable %}
-    <div class="product-single__quantity">
-      <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
-      <input type="number" id="Quantity" name="quantity" value="1" min="1">
-    </div>
+  {% for variant in product.variants %}
+  {% if variant.available %}
+  <option {% if variant==product.selected_or_first_available_variant %} selected="selected" {% endif %}
+    data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency
+    }}</option>
+  {% else %}
+  <option disabled="disabled">
+    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+  </option>
   {% endif %}
+  {% endfor %}
+</select>
 
-  <div class="product-single__cart-submit-wrapper{% if section.settings.enable_payment_button %} product-single__shopify-payment-btn{% endif %}{% if section.settings.add_to_cart_width == 'full_width' %} product-form--full{% endif %}">
-    <button type="submit" name="add" id="AddToCart" class="btn product-single__cart-submit{% if section.settings.add_to_cart_width == 'full_width' %} btn--full{% endif %}{% if section.settings.enable_payment_button and product.selling_plan_groups == empty %} shopify-payment-btn btn--secondary{% endif %}" data-cart-url="{{ routes.cart_url }}">
-      <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
-    </button>
-    {% if section.settings.enable_payment_button %}
 
-      <p class="line-item-property__field">
-        <label for="engraved">Engraved</label>
-        <input id="engraved" type="text" name="properties[Engraved]">
-      </p>
 
-      {{ form | payment_button }}
-    {% endif %}
-  </div>
+{% if section.settings.product_quantity_enable %}
+<div class="product-single__quantity">
+  <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+  <input type="number" id="Quantity" name="quantity" value="1" min="1">
+</div>
+{% endif %}
+
+<div
+  class="product-single__cart-submit-wrapper{% if section.settings.enable_payment_button %} product-single__shopify-payment-btn{% endif %}{% if section.settings.add_to_cart_width == 'full_width' %} product-form--full{% endif %}">
+  <button type="submit" name="add" id="AddToCart"
+    class="btn product-single__cart-submit{% if section.settings.add_to_cart_width == 'full_width' %} btn--full{% endif %}{% if section.settings.enable_payment_button and product.selling_plan_groups == empty %} shopify-payment-btn btn--secondary{% endif %}"
+    data-cart-url="{{ routes.cart_url }}">
+    <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+  </button>
+  {% if section.settings.enable_payment_button %}
+
+  <p class="line-item-property__field">
+    <label for="engraved">Engraved</label>
+    <input id="engraved" type="text" name="properties[Engraved]">
+  </p>
+
+  {{ form | payment_button }}
+  {% endif %}
+</div>
 
 {% endform %}
 
@@ -62,14 +67,18 @@
 
 
 
-<div itemscope itemtype="http://schema.org/Product" id="ProductSection" data-section-id="{{ section.id }}" data-section-type="product-template" data-image-zoom-type="{{ section.settings.product_image_zoom_type }}" data-show-extra-tab="{{ section.settings.show_extra_tab }}" data-extra-tab-content="{{ section.settings.extra_tab_content }}" data-cart-enable-ajax="{{ settings.cart_enable_ajax }}" data-enable-history-state="true">
+<div itemscope itemtype="http://schema.org/Product" id="ProductSection" data-section-id="{{ section.id }}"
+  data-section-type="product-template" data-image-zoom-type="{{ section.settings.product_image_zoom_type }}"
+  data-show-extra-tab="{{ section.settings.show_extra_tab }}"
+  data-extra-tab-content="{{ section.settings.extra_tab_content }}"
+  data-cart-enable-ajax="{{ settings.cart_enable_ajax }}" data-enable-history-state="true">
 
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
   {% comment %}
-    Get first variant in stock, or deep linked one
+  Get first variant in stock, or deep linked one
   {% endcomment %}
   {% assign current_variant = product.selected_or_first_available_variant %}
   {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
@@ -78,28 +87,60 @@
 
     <div class="grid__item medium-up--one-half">
       {% for image in product.images %}
-        {% capture img_id %}ProductImage-{{ image.id }}{% endcapture %}
-        {% capture wrapper_id %}ProductImageWrapper-{{ image.id }}{% endcapture %}
-        {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      {% capture img_id %}ProductImage-{{ image.id }}{% endcapture %}
+      {% capture wrapper_id %}ProductImageWrapper-{{ image.id }}{% endcapture %}
+      {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
 
-        {% include 'image-style' with image: image, width: 720, height: 600, small_style: true, wrapper_id: wrapper_id, img_id: img_id %}
+      {% include 'image-style' with image: image, width: 720, height: 600, small_style: true, wrapper_id: wrapper_id,
+      img_id: img_id %}
 
-        <div id="{{ wrapper_id }}" class="product-single__featured-image-wrapper supports-js{% unless featured_image == image %} hidden{% endunless %}" data-image-id="{{ image.id }}">
-          <div class="product-single__photos" data-image-id="{{ image.id }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%;">
-            <img id="{{ img_id }}"
-                 class="product-single__photo lazyload{% unless featured_image == image %} lazypreload{% endunless %}{% if section.settings.product_image_zoom_type == 'lightbox' %} lightbox{% endif %}"
-                 {% if section.settings.product_image_zoom_type == 'zoom-in' %} data-zoom="{{ image | img_url: '1024x1024' }}"{% endif %}
-                 src="{{ image | img_url: '200x200' }}"
-                 data-src="{{ img_url }}"
-                 data-widths="[180, 360, 470, 600, 750, 940, 1080, 1296, 1512, 1728, 2048]"
-                 data-aspectratio="{{ image.aspect_ratio }}"
-                 data-sizes="auto"
-                 alt="{{ image.alt | escape }}">
-          </div>
-          {% if product.compare_at_price_max > product.price %}
-            <span class="badge badge--sale"><span>{{ 'products.product.on_sale' | t }}</span></span>
+      <div id="{{ wrapper_id }}"
+        class="product-single__featured-image-wrapper supports-js{% unless featured_image == image %} hidden{% endunless %}"
+        data-image-id="{{ image.id }}">
+        <div class="product-single__photos" data-image-id="{{ image.id }}"
+          style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%;">
+          <img id="{{ img_id }}"
+            class="product-single__photo lazyload{% unless featured_image == image %} lazypreload{% endunless %}{% if section.settings.product_image_zoom_type == 'lightbox' %} lightbox{% endif %}"
+            {% if section.settings.product_image_zoom_type=='zoom-in' %} data-zoom="{{ image | img_url: '1024x1024' }}"
+            {% endif %} src="{{ image | img_url: '200x200' }}" data-src="{{ img_url }}"
+            data-widths="[180, 360, 470, 600, 750, 940, 1080, 1296, 1512, 1728, 2048]"
+            data-aspectratio="{{ image.aspect_ratio }}" data-sizes="auto" alt="{{ image.alt | escape }}">
+        </div>
+
+
+        <div class="test-badge">
+          {% comment %}
+            1 Closeout
+            2 New
+            3 Free shipping
+            4 Sale
+          {% endcomment %}
+
+          {% assign date_now = 'now' | date: '%s' %}
+          {% assign date_published = product.created_at | date: '%s' %}
+          {% assign date_difference = date_now | minus: date_published %}
+          {% assign date_difference_ = date_difference | date: '%d' | divided_by: 1 %}
+
+          {% if product.tags contains "Closeout" %}
+            <span class="badge-test badge-closeout">Closeout</span>
+          
+          {% elsif date_difference_ <= 10 %}
+            <span class="badge-test badge-new">New</span>
+          
+          {% elsif product.tags contains "Free shipping" %}
+            <span class="badge-test badge-free_shipping">Free shipping</span>
+          {% comment %}
+          {% elsif product.compare_at_price > product.price %}
+            <span class="badge-test badge-sale">Sale</span>
+          {% endcomment %}
           {% endif %}
         </div>
+
+
+        {% if product.compare_at_price_max > product.price %}
+        <span class="badge badge--sale"><span>{{ 'products.product.on_sale' | t }}</span></span>
+        {% endif %}
+      </div>
       {% endfor %}
 
       <noscript>
@@ -110,34 +151,35 @@
 
 
       {% if product.images.size > 1 %}
-        <ul class="product-single__thumbnails grid grid--uniform" id="ProductThumbs">
+      <ul class="product-single__thumbnails grid grid--uniform" id="ProductThumbs">
 
-          {% case product.images.size %}
-            {% when 2 %}
-              {% assign thumbnail_width = 'small--one-half medium-up--push-one-sixth medium-up--one-third' %}
-            {% when 4 %}
-              {% assign thumbnail_width = 'small--one-half medium-up--one-quarter' %}
-            {% else %}
-              {% assign thumbnail_width = 'small--one-third medium-up--one-third' %}
-          {% endcase %}
+        {% case product.images.size %}
+        {% when 2 %}
+        {% assign thumbnail_width = 'small--one-half medium-up--push-one-sixth medium-up--one-third' %}
+        {% when 4 %}
+        {% assign thumbnail_width = 'small--one-half medium-up--one-quarter' %}
+        {% else %}
+        {% assign thumbnail_width = 'small--one-third medium-up--one-third' %}
+        {% endcase %}
 
-          {% for image in product.images %}
-            <li class="grid__item {{ thumbnail_width }}">
-              <a href="{{ image.src | img_url: 'grande' }}" class="product-single__thumbnail" data-image-id="{{ image.id }}">
-                <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
-              </a>
-            </li>
-          {% endfor %}
+        {% for image in product.images %}
+        <li class="grid__item {{ thumbnail_width }}">
+          <a href="{{ image.src | img_url: 'grande' }}" class="product-single__thumbnail"
+            data-image-id="{{ image.id }}">
+            <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+          </a>
+        </li>
+        {% endfor %}
 
-        </ul>
+      </ul>
       {% endif %}
 
       {% if section.settings.product_image_zoom_type == 'lightbox' %}
-        <ul class="gallery hidden">
-          {% for image in product.images %}
-            <li data-image-id="{{ image.id }}" class="gallery__item" data-mfp-src="{{ image | img_url: '2048x2048' }}"></li>
-          {% endfor %}
-        </ul>
+      <ul class="gallery hidden">
+        {% for image in product.images %}
+        <li data-image-id="{{ image.id }}" class="gallery__item" data-mfp-src="{{ image | img_url: '2048x2048' }}"></li>
+        {% endfor %}
+      </ul>
       {% endif %}
     </div>
 
@@ -146,29 +188,31 @@
         <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
 
         {% if section.settings.vendor_show %}
-          <p class="product-single__vendor" itemprop="brand">{{ product.vendor }}</p>
+        <p class="product-single__vendor" itemprop="brand">{{ product.vendor }}</p>
         {% endif %}
 
         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
           <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
 
-          <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+          <link itemprop="availability"
+            href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
 
           <p class="product-single__prices">
             {% if product.compare_at_price_max > product.price %}
-              <span id="ComparePriceA11y" class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+            <span id="ComparePriceA11y" class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
             {% else %}
-              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
             {% endif %}
-            <span id="ProductPrice" class="product-single__price" itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+            <span id="ProductPrice" class="product-single__price" itemprop="price"
+              content="{{ current_variant.price | divided_by: 100.00 }}">
               {{ current_variant.price | money }}
             </span>
 
             {% if product.compare_at_price_max > product.price %}
-              <span id="PriceA11y" class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-              <s class="product-single__price--compare" id="ComparePrice">
-                {{ current_variant.compare_at_price | money }}
-              </s>
+            <span id="PriceA11y" class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+            <s class="product-single__price--compare" id="ComparePrice">
+              {{ current_variant.compare_at_price | money }}
+            </s>
             {% endif %}
 
             {% include 'product-unit-price', variant: current_variant, available: true %}
@@ -177,12 +221,12 @@
         </div>
 
         {% if section.settings.product_description_position == 'right' %}
-          {%- assign position = 'right' -%}
-          {% include 'product-description' %}
+        {%- assign position = 'right' -%}
+        {% include 'product-description' %}
         {% endif %}
 
         {% if section.settings.social_sharing_products %}
-          {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+        {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
         {% endif %}
       </div>
     </div>
@@ -190,13 +234,13 @@
   </div>
 
   {% if section.settings.product_description_position == 'below' %}
-    {%- assign position = 'below' -%}
-    {% include 'product-description' %}
+  {%- assign position = 'below' -%}
+  {% include 'product-description' %}
   {% endif %}
 </div>
 
 {% unless product == empty %}
-  <script type="application/json" id="ProductJson-{{ section.id }}">
+<script type="application/json" id="ProductJson-{{ section.id }}">
     {{ product | json }}
   </script>
 {% endunless %}
@@ -207,8 +251,8 @@
   // add to cart button, sold out, and unavailable states here.
   window.productStrings = {
     addToCart: {{ 'products.product.add_to_cart' | t | json }},
-    soldOut: {{ 'products.product.sold_out' | t | json }},
-    unavailable: {{ 'products.product.unavailable' | t | json }}
+  soldOut: { { 'products.product.sold_out' | t | json } },
+  unavailable: { { 'products.product.unavailable' | t | json } }
   }
 </script>
 
