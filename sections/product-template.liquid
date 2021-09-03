@@ -15,9 +15,11 @@
   {%- assign productClasses = productClasses | append: ' product-form--default-variant-only' -%}
 {%- endif -%}
 
+
 {% form 'product', product, class: productClasses %}
   {{ form | payment_terms }}
   <select name="id" id="ProductSelect-{{ section.id }}" class="product-single__variants">
+
     {% for variant in product.variants %}
       {% if variant.available %}
         <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
@@ -28,6 +30,8 @@
       {% endif %}
     {% endfor %}
   </select>
+
+
 
   {% if section.settings.product_quantity_enable %}
     <div class="product-single__quantity">
@@ -41,6 +45,12 @@
       <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
     </button>
     {% if section.settings.enable_payment_button %}
+
+      <p class="line-item-property__field">
+        <label for="engraved">Engraved</label>
+        <input id="engraved" type="text" name="properties[Engraved]">
+      </p>
+
       {{ form | payment_button }}
     {% endif %}
   </div>
@@ -95,6 +105,9 @@
       <noscript>
         <img src="{{ featured_image | img_url: 'grande' }}" alt="{{ featured_image.alt | escape }}">
       </noscript>
+
+
+
 
       {% if product.images.size > 1 %}
         <ul class="product-single__thumbnails grid grid--uniform" id="ProductThumbs">
@@ -160,20 +173,6 @@
 
             {% include 'product-unit-price', variant: current_variant, available: true %}
           </p>
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
 
         </div>
 

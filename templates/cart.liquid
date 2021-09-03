@@ -63,24 +63,45 @@
                     {% if property_size > 0 %}
                       <br />
                       {% for p in item.properties %}
-                          {% assign first_character_in_key = p.first | truncate: 1, '' %}
+                        {% assign first_character_in_key = p.first | truncate: 1, '' %}
                           {% unless p.last == blank or first_character_in_key == '_' %}
                             <small>
-                              {{ p.first }}:
-
+                              {{ p.first }}
                               {% comment %}
                                 Check if there was an uploaded file associated
                               {% endcomment %}
                               {% if p.last contains '/uploads/' %}
                                 <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
                               {% else %}
-                                {{ p.last }}
-                              {% endif %}
-                            </small><br />
-                          {% endunless %}
+                              {{ p.last }}
+                            {% endif %}
+                          </small><br />
+                        {% endunless %}
                       {% endfor %}
                     {% endif %}
                   </p>
+                  
+
+                  {% if property_size > 0 %}
+                    {% for p in item.properties %}
+                      {% assign first_character_in_key = p.first | truncate: 1, '' %}
+                      {% unless p.last == blank or first_character_in_key == '_' %}
+                        <style>
+                          .border {
+                            border: 1px dashed #800000;
+                          }
+                        </style>
+                        <div class='border'>
+                          <small class='grav_count_hidden'><i>text - {{ p.last | split: ' ' }}</i></small><br>
+                          {% capture character_number %}{{ p.last | split: ' ' }}{% endcapture %}
+                          <small><i>count_symbol - {{ character_number | size }}</i></small> <br>
+                          <small><i>price_start - {{ character_number | size | times: 2 }}</i></small> <br>
+                          <small><i>price_final - {{ character_number | size | times: 200 | money }}</i></small><br>
+                          {% capture add_price %}{{ character_number | size | times: 200 }}{% endcapture %}
+                        </div>
+                      {% endunless %}
+                    {% endfor %}
+                  {% endif %}
 
 
 
@@ -115,13 +136,24 @@
                     <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">{{ 'cart.general.remove' | t }}</a>
                   </p>
                 </td>
+
+
+
+
+
                 <td class="cart__table-cell--price medium-up--text-right" data-label="{{ 'cart.label.price' | t }}">
+
+                  1){{ item.original_price }}
+                  <del>2){{ item.final_price }}</del>
+
                   {%- if item.original_price != item.final_price -%}
                     <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
                     <del>{{ item.original_price | money }}</del>
                     <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
                     <span class="order-discount">{{ item.final_price | money }}</span>
                   {%- else -%}
+
+
                     {{ item.original_price | money }}
                   {%- endif -%}
 
@@ -137,6 +169,10 @@
                     </ul>
                   {%- endif -%}
                 </td>
+
+
+
+
                 <td data-label="{{ 'cart.label.quantity' | t }}" class="medium-up--text-right cart__table-cell--quantity">
                   <label class="visually-hidden" for="updates_{{ item.key }}">{{ 'cart.label.quantity' | t }}</label>
                   <input class="quantity-selector" type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
@@ -147,8 +183,9 @@
                     <del>{{ item.original_line_price | money }}</del>
                     <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
                     <span class="order-discount">{{ item.final_line_price | money }}</span>
+                    <span class="test">{{ item.final_line_price | plus: add_price }}</span>
                   {%- else -%}
-                    {{ item.original_line_price | money }}
+                    {{ item.original_line_price | plus: add_price | money }}
                   {%- endif -%}
                 </td>
               </tr>
