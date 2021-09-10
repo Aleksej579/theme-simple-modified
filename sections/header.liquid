@@ -113,6 +113,15 @@
         </script>
       {%- endif -%}
 
+      <!-- rewrite for liquid -->
+      {%- if customer.has_account -%}
+        <div class='wrapper_count_orders_in_progress'>
+          {% assign order_unfulfilled = customer.orders | where: "fulfillment_status_label", "Unfulfilled" %}
+          {% assign count_order_unfulfilled = order_unfulfilled | size %}
+          <span>Orders in progress: {{ count_order_unfulfilled }}</span>
+        </div>
+      {%- endif -%}
+
     </div>
   </div>
 

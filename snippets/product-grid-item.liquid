@@ -123,6 +123,7 @@
         2 Free shipping
         3 New
         4 Closeout
+      {% endcomment %}
 
         {% assign date_now = 'now' | date: '%s' %}
         {% assign date_published = product.created_at | date: '%s' %}
@@ -139,8 +140,6 @@
           <span class="badge-test badge-closeout">Closeout</span>
         {% endif %}
 
-      {% endcomment %}
-      
     </div>
 
     {% if sold_out %}
