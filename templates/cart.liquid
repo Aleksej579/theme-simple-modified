@@ -103,34 +103,27 @@
                     {% endfor %}
                   {% endif %}
 
-
-
+                  <!-- NEW what is browser -->
                   <p class="">
-                    <input id="metafielaBrowser" type="hidden" name="attributes[metafielaBrowser]" value="{{ cart.attributes["metafielaBrowser"] }}">
+                    <!-- <input id="metafielaBrowser" type="hidden" name="attributes[metafielaBrowser]" value="{{ cart.attributes["metafielaBrowser"] }}"> -->
+                    <input id="metafielaBrowser" type="hidden" name="attributes[metafielaBrowser]" value="">
                   </p>
-                  
+
                   <script>
-                    
                     var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
                     var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
                     var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0; // At least Safari 3+: "[object HTMLElementConstructor]"
-                    var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
-                    var isIE = /*@cc_on!@*/false || !!document.documentMode;   // At least IE6
-                    
+                    var isChrome = !!window.chrome && !isOpera; // Chrome 1+
+                    var isIE = /*@cc_on!@*/false || !!document.documentMode; // At least IE6
+
                     let inp = document.querySelector('#metafielaBrowser')
-                  
-                    if (isFirefox) {
-                      inp.value = 'Firefox';
-                      
-                    }
-                    if (isChrome) {
-                      inp.value = 'Chrome';
-                    }
-                    
+
+                    if (isFirefox) {inp.value = 'Firefox';}
+                    if (isChrome) {inp.value = 'Chrome';}
+                    if (isOpera) {inp.value = 'Opera';}
+                    if (isSafari) {inp.value = 'Safari';}
+                    if (isIE) {inp.value = 'IE';}
                    </script>
-
-
-
 
                   <p class="txt--minor">
                     <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">{{ 'cart.general.remove' | t }}</a>
