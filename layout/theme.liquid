@@ -8,12 +8,12 @@
     <link rel="canonical" href="{{ canonical_url }}">
     
     
-    
+    <!-- add Polaris start -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/@shopify/polaris@5.0.0/dist/styles.css"
   />
-    
+    <!-- add Polaris end -->
   
     
     {% if settings.favicon %}
@@ -90,8 +90,10 @@
     {% endif %}
 
 
+    <!-- add file owl.carusel start -->
     {{ 'owl.carousel.js' | asset_url | script_tag }}
-
+    <!-- add file owl.carusel end -->
+    
   </head>
   
   <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ request.page_type | handle }}">
@@ -161,7 +163,10 @@
     
   
     {{ 'theme.js' | asset_url | script_tag }}
+
+    <!-- add file js start -->
     {{ 'react.js' | asset_url | script_tag }}
+    <!-- add file js end -->
   
     
   {% include 'instabuy' %}

@@ -53,9 +53,11 @@ $color-body: {{ settings.color_body_bg }};
 
 // Primary color
 $color-primary: {{ settings.color_primary_color }};
+$color-primary_btn: {{ settings.color_new_btn_primary }};
+$color-primary_btn_border: {{ settings.color_new_btn_primary_border }};
 
 // Button colors
-$color-btn-primary-bg: $color-primary;
+$color-btn-primary-bg: $color-primary_btn;
 $color-btn-primary-hover: darken($color-btn-primary-bg, 10%);
 $color-btn-primary-active: darken($color-btn-primary-hover, 10%);
 $color-btn-primary-text: {{ settings.color_primary_button_text }};
@@ -1939,9 +1941,9 @@ a[href^="tel"] {
   padding: 7px 15px;
   // Set secondary button colors
   background-color: transparent;
-  border: 2px solid #008000;
-  border-radius: 20px;
-  color: #008000;
+  border: 2px solid $color-primary_btn_border;
+  border-radius: 10px;
+  color: $color-primary_btn_border;
 
   &:hover {
     opacity: 0.8;
@@ -2023,6 +2025,7 @@ a[href^="tel"] {
   .shopify-payment-button__button--unbranded {
     @extend .btn;
     white-space: normal;
+    border-radius: 10px;
 
     &:hover {
       background-color: lighten($color-btn-primary-bg, 10%) !important;

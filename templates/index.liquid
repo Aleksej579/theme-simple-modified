@@ -1,12 +1,19 @@
 <div class="index-sections">
 
+  <!-- new code start -->
   {% if template == 'index' %}
     {% render 'pop-up' %}
   {% endif %}
+  <!-- new code end -->
 
   {{ content_for_index }}
 
-  {% section 'carousel_' %}
+  <!-- add owl.carusel start -->
+  {% comment %}{% section 'carousel_' %}{% endcomment %}
+  {% section 'carousel_2' %}
+  <!-- add owl.carusel end -->
+
+  {% section 'newsletter' %}
 
   <div style="border: 1px solid #800000;">
     <p style="text-decoration: underline;"><i>New block. This block is duplicate 'featured-content'</i></p>
