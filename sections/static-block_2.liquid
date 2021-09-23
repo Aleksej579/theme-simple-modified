@@ -1,0 +1,31 @@
+{% schema %}
+  {
+    "name": "Static block content 2",
+    "settings": [
+      	{
+          "type": "text",
+          "id": "header",
+          "label": "Text",
+          "default": "Terms of use of the service 2"
+      	},
+      	{
+            "type": "richtext",
+            "id": "body",
+			"label": "text",
+			"default": "<p>1) The product can be returned within 14 days from the date of purchase. <br> 2) Refunds are made to the credit card. <br> 3) Return and delivery of goods is carried out within 7 days.</p>"
+      	}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+
+<div class="Polaris-Card">
+	<p> {{section.settings.header}}</p>
+  	<p> {{section.settings.body}}</p>
+</div>
