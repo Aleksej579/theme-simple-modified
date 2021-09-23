@@ -1,3 +1,64 @@
+<!-- <style>
+    .drop-down-content {
+        display: none;
+    }
+
+    .dropdown:hover .drop-down-content {
+        display: block;
+        transition-duration: 6s;
+    }
+
+    .Polaris-Card {
+        border: 1px solid #800000;
+    }
+</style>
+
+<div class="Polaris-Card">
+
+    <p>Cteated menu by code (Working with specific directories)</p>
+
+    {% assign tag_handle = 'beverages' %}
+    {% assign collection = collections[tag_handle] %}
+
+    {% assign tag_handle_1 = 'beverages-cocktail' %}
+    {% assign collection_1 = collections[tag_handle_1] %}
+
+    {% assign tag_handle_2 = 'beverages-coffee' %}
+    {% assign collection_2 = collections[tag_handle_2] %}
+
+    <ul>
+        <li class="dropdown">
+            <a href="{{ collection.url }}">{{ collection.title }}</a>
+            <ul class='drop-down-content'>
+                <li>
+                    <a href="{{ collection_1.url }}">{{ collection_1.title }}</a>
+                </li>
+                <li>
+                    <a href="{{ collection_2.url }}">{{ collection_2.title }}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="Polaris-Card">
+    <p>Cteated menu by code (Display all directories dynamically)</p>
+    <ul>
+        <li><a href="/cart">Cart</a>
+        <li>
+        <li class="dropdown">
+            <a href="/collections">Collections all</a>
+            <ul class='drop-down-content'>
+                {% for collection in collections %}
+                <li>
+                    <a href="{{ collection.url }}">{{ collection.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        <li>
+    </ul>
+</div> -->
+
 <style>
     .drop-down-content {
         display: none;
