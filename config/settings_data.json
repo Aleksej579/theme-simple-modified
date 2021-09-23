@@ -9,6 +9,8 @@
         "color_form": "#f4f4f4",
         "color_image_overlay_text": "#fff",
         "color_image_overlay": "#3a3f5d",
+        "color_new_btn_primary": "#800080",
+        "color_new_btn_primary_border": "#30D5C8",
         "image_overlay_opacity": 25,
         "type_header_font": "dosis_n5",
         "type_header_base_size": "20px",
