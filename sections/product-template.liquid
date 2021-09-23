@@ -97,8 +97,40 @@
       </noscript>
 
 
+      {% if product.images.size > 1 %}
+      <ul class="product-single__thumbnails grid grid--uniform" id="ProductThumbs">
 
-      {% form 'product', product, class: productClasses %}
+        {% case product.images.size %}
+        {% when 2 %}
+        {% assign thumbnail_width = 'small--one-half medium-up--push-one-sixth medium-up--one-third' %}
+        {% when 4 %}
+        {% assign thumbnail_width = 'small--one-half medium-up--one-quarter' %}
+        {% else %}
+        {% assign thumbnail_width = 'small--one-third medium-up--one-third' %}
+        {% endcase %}
+
+        {% for image in product.images %}
+        <li class="grid__item {{ thumbnail_width }}">
+          <a href="{{ image.src | img_url: 'grande' }}" class="product-single__thumbnail"
+            data-image-id="{{ image.id }}">
+            <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+          </a>
+        </li>
+        {% endfor %}
+
+      </ul>
+      {% endif %}
+
+      {% if section.settings.product_image_zoom_type == 'lightbox' %}
+      <ul class="gallery hidden">
+        {% for image in product.images %}
+        <li data-image-id="{{ image.id }}" class="gallery__item" data-mfp-src="{{ image | img_url: '2048x2048' }}"></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+    {% form 'product', product, class: productClasses %}
 {{ form | payment_terms }}
 <select name="id" id="ProductSelect-{{ section.id }}" class="product-single__variants">
 
@@ -144,40 +176,6 @@
 
 {% endform %}
 
-
-      {% if product.images.size > 1 %}
-      <ul class="product-single__thumbnails grid grid--uniform" id="ProductThumbs">
-
-        {% case product.images.size %}
-        {% when 2 %}
-        {% assign thumbnail_width = 'small--one-half medium-up--push-one-sixth medium-up--one-third' %}
-        {% when 4 %}
-        {% assign thumbnail_width = 'small--one-half medium-up--one-quarter' %}
-        {% else %}
-        {% assign thumbnail_width = 'small--one-third medium-up--one-third' %}
-        {% endcase %}
-
-        {% for image in product.images %}
-        <li class="grid__item {{ thumbnail_width }}">
-          <a href="{{ image.src | img_url: 'grande' }}" class="product-single__thumbnail"
-            data-image-id="{{ image.id }}">
-            <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
-          </a>
-        </li>
-        {% endfor %}
-
-      </ul>
-      {% endif %}
-
-      {% if section.settings.product_image_zoom_type == 'lightbox' %}
-      <ul class="gallery hidden">
-        {% for image in product.images %}
-        <li data-image-id="{{ image.id }}" class="gallery__item" data-mfp-src="{{ image | img_url: '2048x2048' }}"></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div>
-
     <div class="grid__item medium-up--one-half{% if product.images.size == 0%} medium-up--push-one-half{% endif %}">
       <div class="product-single__meta small--text-center">
         <h1 class="product-single__title" itemprop="name">{{ product.title }}</h1>
@@ -214,6 +212,8 @@
           </p>
 
         </div>
+
+        
 
         {% if section.settings.product_description_position == 'right' %}
         {%- assign position = 'right' -%}
