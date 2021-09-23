@@ -90,8 +90,10 @@
     {% endif %}
 
 
+    <!-- add file owl.carusel start -->
     {{ 'owl.carousel.js' | asset_url | script_tag }}
-
+    <!-- add file owl.carusel end -->
+    
   </head>
   
   <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ request.page_type | handle }}">
